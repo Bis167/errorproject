@@ -1,21 +1,28 @@
 {% load static %}
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
-    <link rel="stylesheet" href="/CSS/style.css">
-    <script src='{% static "https://kit.fontawesome.com/30d17e141a.js" %}' crossorigin="anonymous"></script>
-</head>
-<body>
+    <link rel="stylesheet" href="{% static '/CSS/style.css' %}" />
+    <script
+      src='{% static "https://kit.fontawesome.com/30d17e141a.js" %}'
+      crossorigin="anonymous"
+    ></script>
+  </head>
+  <body>
     <div class="register">
-    <div class="container">
+      <div class="container">
         <header>Register as a service provider</header>
         <form action="post">
           <div class="field email-field">
             <div class="input-field">
-              <input type="email" placeholder="Enter your email" class="email" />
+              <input
+                type="email"
+                placeholder="Enter your email"
+                class="email"
+              />
             </div>
             <span class="error email-error">
               <i class="bx bx-error-circle error-icon"></i>
@@ -59,5 +66,5 @@
         </form>
       </div>
     </div>
-</body>
+  </body>
 </html>

@@ -1,169 +1,146 @@
 <!DOCTYPE html>
 <html>
-<head>
-  <title>Search Results</title>
-  <!-- Add your CSS stylesheets here -->
+  <head>
+    <title>Search Results</title>
+    <!-- Add your CSS stylesheets here -->
 
-  <link rel="stylesheet" href="/CSS/style.css">
-  
-<style>
+    <link rel="stylesheet" href="{% static '/CSS/style.css' %}" />
 
-.service-result{
+    <style>
+      .service-result {
+        display: flex;
+        justify-content: space-between;
+        flex-direction: column;
+        align-items: center;
+        background-color: rgb(126, 126, 168);
+      }
 
-  display: flex;
-  justify-content: space-between;
-  flex-direction: column;
-  align-items: center;
-  background-color: rgb(126, 126, 168);
+      #resultsContainer {
+        display: grid;
+        grid-template-columns: 1fr 1fr; /* Two equal columns */
+        grid-gap: 10px; /* Spacing between grid items */
+        background-color: #f0f0f0; /* Just for visualization */
+        padding: 20px;
+        background-color: rgb(126, 126, 168);
+      }
 
-}
+      .blog {
+        font-family: Verdana, Geneva, sans-serif;
+        color: black;
+      }
+      .blog h2 {
+        font-family: Georgia, serif;
+      }
 
+      .card {
+        width: 404px;
+        height: 150px;
+        border: 1px solid black;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        margin-top: 1rem;
+        /* background-color:  rgb(217, 192, 241); */
+        border-radius: 7px;
+        cursor: pointer;
+        color: black;
+      }
 
-#resultsContainer{
-
-  display: grid;
-  grid-template-columns: 1fr 1fr; /* Two equal columns */
-  grid-gap: 10px; /* Spacing between grid items */
-  background-color: #f0f0f0; /* Just for visualization */
-  padding: 20px;
-  background-color: rgb(126, 126, 168);
-}
-
-.blog{
-
-  font-family: Verdana, Geneva, sans-serif;
-  color: black;
-}
-.blog h2{
-
-  font-family: Georgia, serif;
-}
-
-
-  .card {
-    width: 404px;
-    height: 150px;
-    border: 1px solid black;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    margin-top: 1rem;
-    /* background-color:  rgb(217, 192, 241); */
-    border-radius: 7px;
-    cursor: pointer;
-    color: black;
-    
-  }
-
-  .card .profile-picture {
-    width: 84px;
-    height: 100px;
-    background-color: #ccc;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 40px;
-    margin-top: 1rem;
-    /* background-color:rgb(231, 152, 123); */
-    background-color: white;
-    color: black;
-   
-  }
-
-
-</style>
-  
-</head>
-<body>
-  
-  <nav class="navbar">
-
-    <div class="logo">
+      .card .profile-picture {
+        width: 84px;
+        height: 100px;
+        background-color: #ccc;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 40px;
+        margin-top: 1rem;
+        /* background-color:rgb(231, 152, 123); */
+        background-color: white;
+        color: black;
+      }
+    </style>
+  </head>
+  <body>
+    <nav class="navbar">
+      <div class="logo">
         <a href="#">
-            <img src="/Images/f-logo.png" alt="logo">
+          <img src="/Images/f-logo.png" alt="logo" />
         </a>
-    </div>
+      </div>
 
-
-    <div class="navbar-links">
+      <div class="navbar-links">
         <ul>
+          <li class="item"><a href="index.html">Home</a></li>
 
-
-            <li class="item"><a href="index.html">Home</a></li>
-          
-            <li class="item"><a href="faq.html">FAQ</a></li>
-            <li class="item"><a href="contact.html">Contacts</a></li>
-
-
+          <li class="item"><a href="faq.html">FAQ</a></li>
+          <li class="item"><a href="contact.html">Contacts</a></li>
         </ul>
+      </div>
 
-    </div>
-
-    <a href="#" id="toggle-button" class="toggle-button">
+      <a href="#" id="toggle-button" class="toggle-button">
         <span class="bar"></span>
         <span class="bar"></span>
         <span class="bar"></span>
-    </a>
+      </a>
 
-    <div id="registerBtn">
-
-       <a href="demo.html"> <button>Register</button></a>
+      <div id="registerBtn">
+        <a href="demo.html"> <button>Register</button></a>
         <!-- <a class="active" href="demo.html"><i class="fa fa-user"></i> Register </a> -->
-    </div>
+      </div>
+    </nav>
 
+    <section class="service-result">
+      <div class="blog">
+        <h2>Available service provider near you!!</h2>
+        <p>
+          With the available details you can contact any of the professional
+          service provider as your wish.
+        </p>
+      </div>
 
-</nav>
+      <div id="resultsContainer"></div>
+    </section>
 
-<section class="service-result">
-  <div class="blog">
-    <h2>Available service provider near you!!</h2>
-    <p>With the available details you can contact
-    any of the professional service provider as your wish.</p>
-  </div>
+    <script>
+      // Retrieve the search results from the query parameter
+      const urlParams = new URLSearchParams(window.location.search);
+      const results = urlParams.get("results");
 
-  <div id="resultsContainer">
-  </div>
+      // Parse the JSON string to get the array of service providers
+      const serviceProviders = JSON.parse(results);
 
-</section>
+      // Display the service providers on the page
+      const resultsContainer = document.getElementById("resultsContainer");
+      serviceProviders.forEach((serviceProvider) => {
+        // Create a card element for each service provider
+        const card = document.createElement("div");
+        card.classList.add("card");
 
-  
-<script>
-  // Retrieve the search results from the query parameter
-  const urlParams = new URLSearchParams(window.location.search);
-  const results = urlParams.get('results');
+        // Create profile picture element with first letter of name
+        const profilePicture = document.createElement("div");
+        profilePicture.classList.add("profile-picture");
+        profilePicture.textContent = serviceProvider.name
+          .charAt(0)
+          .toUpperCase();
 
-  // Parse the JSON string to get the array of service providers
-  const serviceProviders = JSON.parse(results);
+        // Create card content with name and mobile number
+        const name = document.createElement("h3");
+        name.textContent = "Name: " + serviceProvider.name;
+        const mobileNumber = document.createElement("p");
+        mobileNumber.textContent =
+          "Phone number: " + serviceProvider.phoneNumber;
 
-  // Display the service providers on the page
-  const resultsContainer = document.getElementById('resultsContainer');
-  serviceProviders.forEach((serviceProvider) => {
-    // Create a card element for each service provider
-    const card = document.createElement('div');
-    card.classList.add('card');
+        // Append profile picture, name, and mobile number to the card
+        card.appendChild(profilePicture);
+        card.appendChild(name);
+        card.appendChild(mobileNumber);
 
-    // Create profile picture element with first letter of name
-    const profilePicture = document.createElement('div');
-    profilePicture.classList.add('profile-picture');
-    profilePicture.textContent = serviceProvider.name.charAt(0).toUpperCase();
-
-    // Create card content with name and mobile number
-    const name = document.createElement('h3');
-    name.textContent = 'Name: ' + serviceProvider.name;
-    const mobileNumber = document.createElement('p');
-    mobileNumber.textContent = 'Phone number: ' + serviceProvider.phoneNumber;
-
-    // Append profile picture, name, and mobile number to the card
-    card.appendChild(profilePicture);
-    card.appendChild(name);
-    card.appendChild(mobileNumber);
-
-    // Append the card to the results container
-    resultsContainer.appendChild(card);
-  });
-</script>
-  
-</body>
+        // Append the card to the results container
+        resultsContainer.appendChild(card);
+      });
+    </script>
+  </body>
 </html>
